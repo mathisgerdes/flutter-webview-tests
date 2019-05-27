@@ -11,5 +11,20 @@
   </head>
   <body>
     <h1>Hello</h1>
+
+    <script type="text/javascript">
+
+      async function loadData() {
+        try {
+          response =  await (await fetch("/exampleJson")).json();
+          document.write("Response: " + JSON.stringify(response));
+        } catch(e) {
+          console.log(e);
+          document.write('<h1>Error loading json</h1>');
+        }
+      }
+
+      loadData();
+    </script>
   </body>
 </html>
