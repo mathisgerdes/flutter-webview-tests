@@ -59,6 +59,16 @@ class _MyHomePageState extends State<MyHomePage> {
               initialUrl: 'http://localhost:$port/static/hello.html',
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (c) => controller = c,
+              javascriptChannels: {
+                JavascriptChannel(
+                  name: 'Message',
+                  onMessageReceived: (JavascriptMessage m) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(m.message),
+                    ));
+                  },
+                ),
+              },
             );
           else
             return Center(

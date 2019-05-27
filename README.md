@@ -1,18 +1,12 @@
-# Test 5
-Tests: evaluate javascript.
+# Test 6
+Tests: javascript channels.
 
 ## Expected
-The app should show gray background and the text "Hello", as well as a
-floating button. If the floating button is pressed, the text
-`Response: {"message":"hello"}` should appear.
+The app should now show a button saying "show snackbar". If pressed,
+a snackbar reading "hello" should appear.
 
 ## On Failure
 Try re-installing the app. Maybe the assets added in this step were not
 properly synchronized.
 
 Inspect the logs for any javascript errors thrown.
-
-In `lib/main.dart` replace `loadData();` with `alert("hello")`.
-Now instead of the text an alert should appear.
-If this also doesn't work, there is a problem with forced evaluation of
-javascript code.
