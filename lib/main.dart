@@ -1,28 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:jaguar/jaguar.dart';
 
 void main() => runApp(MyApp());
+
+const port = 8420;
+
+Future<Jaguar> loadServer() async {
+  final server = Jaguar(port: port);
+
+  server.getJson('/exampleJson', (Context ctx) async {
+    return {"message": "hello"}; // Automatically encodes to JSON
+  });
+  
+  server.serve(logRequests: true);
+  return server;
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Webview Test',
-      home: MyHomePage(),
+      home: MyHomePage(futureServer: loadServer()),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({Key key, this.futureServer}) : super(key: key);
+
+  final Future<Jaguar> futureServer;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Webview Test'),
       ),
-      body: const WebView(
-        initialUrl: 'http://detexify.kirelabs.org/classify.html',
-        javascriptMode: JavascriptMode.unrestricted,
+      body: FutureBuilder(
+        future: futureServer,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) throw snapshot.error;
+
+          if (snapshot.connectionState == ConnectionState.done)
+            return WebView(
+              initialUrl: 'http://localhost:$port/exampleJson',
+              javascriptMode: JavascriptMode.unrestricted,
+            );
+          else
+            return Center(
+              child: Text('Loading... (state: ${snapshot.connectionState})'),
+            );
+        },
       ),
     );
   }

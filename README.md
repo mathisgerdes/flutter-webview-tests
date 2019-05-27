@@ -1,10 +1,11 @@
-# Test 1
-Tests: http connection.
+# Test 2
+Tests: local (jaguar) server.
 
 ## Expected
-The http website Detexify should load and be visible full-screen.
+The app should show simply the text {"message": "hello"}.
 
 ## On Failure
-In `lib/main.dart` replace the `initial_url` with `https://google.com`.
-If this doesn't work either, there is an underlying problem with the webview.
-If it does work, there is a problem with http connections.
+Without closing the app (i.e. only put it into the background), leave it
+and open a web browser. In it try opening `localhost:8420/exampleJson`.
+If this also does not show the expected text, the jaguar server must
+not work properly.
