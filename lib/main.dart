@@ -31,10 +31,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key, this.futureServer}) : super(key: key);
 
   final Future<Jaguar> futureServer;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  WebViewController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +50,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Webview Test'),
       ),
       body: FutureBuilder(
-        future: futureServer,
+        future: widget.futureServer,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) throw snapshot.error;
 
@@ -51,12 +58,17 @@ class MyHomePage extends StatelessWidget {
             return WebView(
               initialUrl: 'http://localhost:$port/static/hello.html',
               javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (c) => controller = c,
             );
           else
             return Center(
               child: Text('Loading... (state: ${snapshot.connectionState})'),
             );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => controller?.evaluateJavascript('loadData();'),
+        child: Icon(Icons.add),
       ),
     );
   }

@@ -17,14 +17,13 @@
       async function loadData() {
         try {
           response =  await (await fetch("/exampleJson")).json();
-          document.write("Response: " + JSON.stringify(response));
+          document.write("Response: " + JSON.stringify(response) + '<br>');
         } catch(e) {
           console.log(e);
           document.write('<h1>Error loading json</h1>');
         }
       }
 
-      loadData();
     </script>
   </body>
 </html>
