@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:jaguar/jaguar.dart';
+import 'package:jaguar_flutter_asset/jaguar_flutter_asset.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,11 +10,14 @@ const port = 8420;
 Future<Jaguar> loadServer() async {
   final server = Jaguar(port: port);
 
+  server.addRoute(serveFlutterAssets(path: 'static/*', stripPrefix: false));
+
   server.getJson('/exampleJson', (Context ctx) async {
     return {"message": "hello"}; // Automatically encodes to JSON
   });
-  
+
   server.serve(logRequests: true);
+  print('Server initialization done.');
   return server;
 }
 
@@ -45,7 +49,7 @@ class MyHomePage extends StatelessWidget {
 
           if (snapshot.connectionState == ConnectionState.done)
             return WebView(
-              initialUrl: 'http://localhost:$port/exampleJson',
+              initialUrl: 'http://localhost:$port/static/hello.html',
               javascriptMode: JavascriptMode.unrestricted,
             );
           else

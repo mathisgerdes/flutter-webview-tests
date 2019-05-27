@@ -81,6 +81,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
+  jaguar_flutter_asset:
+    dependency: "direct main"
+    description:
+      name: jaguar_flutter_asset
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   jaguar_serializer:
     dependency: transitive
     description:

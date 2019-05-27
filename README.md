@@ -1,11 +1,11 @@
-# Test 2
-Tests: local (jaguar) server.
+# Test 3
+Tests: Serving local, static files.
 
 ## Expected
-The app should show simply the text {"message": "hello"}.
+The app should now show a gray background with the word "Hello".
 
 ## On Failure
-Without closing the app (i.e. only put it into the background), leave it
-and open a web browser. In it try opening `localhost:8420/exampleJson`.
-If this also does not show the expected text, the jaguar server must
-not work properly.
+Try re-installing the app. Maybe the assets added in this step were not
+properly synchronized.
+
+If this fails, the problem likely lies with the serving of local, static files.
